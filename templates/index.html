@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sh's Modern Blog</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/modern-style.css' %}">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+
+    <!-- Floating Navbar -->
+    <nav class="floating-nav">
+        <div class="container">
+            <a href="/" class="brand">Sh's Blog</a>
+            <div class="nav-links">
+                <a href="{% url 'blog:home' %}" class="active"><i class="fas fa-home"></i> Home</a>
+                <a href="{% url 'blog:contact' %}"><i class="fas fa-envelope"></i> Contact</a>
+                <div class="search-box">
+                    <form action="{% url 'blog:search' %}" method="get">
+                        <input type="text" name="q" placeholder="Search..." value="{{ query }}">
+                        <button type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="container">
+            <h1 class="animate__animated animate__fadeInDown">Python olamiga hush kelibsiz</h1>
+            <p class="animate__animated animate__fadeInUp">Bu yerda PYTHON dasturlash tilini 0 dan bepul o'rganishingiz mumkin! </p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Category Tags -->
+        <div class="category-tags animate__animated animate__fadeIn">
+            {% for cat in categories %}
+            <a href="{% url 'blog:category_list' cat.slug %}" class="tag">
+                {{ cat.name }}
+                <span class="badge">{{ cat.posts.all.count }}</span>
+            </a>
+            {% endfor %}
+        </div>
+
+        <!-- Posts Grid -->
+        <div class="posts-grid">
+            {% for post in page_obj %}
+            <article class="post-card animate__animated animate__fadeIn" data-delay="{{ forloop.counter0|divisibleby:2|yesno:'100,200' }}">
+                <div class="post-content">
+                    <div class="post-meta">
+                        <span class="date"><i class="far fa-calendar"></i> {{ post.created_at|date:"M d, Y" }}</span>
+                        <span class="views"><i class="far fa-eye"></i> {{ post.views }}</span>
+                    </div>
+                    <h3><a href="{% url 'blog:detail' post.id %}">{{ post.title }}</a></h3>
+                    <p>{{ post.body|truncatewords:25 }}</p>
+                    <div class="post-footer">
+                        <div class="tags">
+                            {% for tag in post.tag.all %}
+                            <span class="tag">{{ tag.name }}</span>
+                            {% endfor %}
+                        </div>
+                        <a href="{% url 'blog:detail' post.id %}" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </article>
+            {% empty %}
+            <div class="no-posts animate__animated animate__fadeIn">
+                <i class="far fa-newspaper"></i>
+                <h3>No posts found!</h3>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if page_obj.paginator.num_pages > 1 %}
+        <div class="pagination animate__animated animate__fadeIn">
+            {% if page_obj.has_previous %}
+            <a href="?page=1" class="page-item"><i class="fas fa-angle-double-left"></i></a>
+            <a href="?page={{ page_obj.previous_page_number }}" class="page-item"><i class="fas fa-angle-left"></i></a>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+            <a href="?page={{ num }}" class="page-item {% if num == page_obj.number %}active{% endif %}">{{ num }}</a>
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="page-item"><i class="fas fa-angle-right"></i></a>
+            <a href="?page={{ page_obj.paginator.num_pages }}" class="page-item"><i class="fas fa-angle-double-right"></i></a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="modern-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>Sh's Blog</h3>
+                    <p>Modern, clean and responsive blog template</p>
+                </div>
+                <div class="footer-links">
+                    <a href="{% url 'blog:home' %}">Home</a>
+                    <a href="{% url 'blog:contact' %}">Contact</a>
+                    <a href="#">About</a>
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Sh's Blog. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="{% static 'js/modern-blog.js' %}"></script>
+</body>
+</html>
