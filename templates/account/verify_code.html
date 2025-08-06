@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Parolni tasdiqlash | Conditioners</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Parolni tasdiqlash | Sh's🎀N's</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+
   <style>
     :root {
-      --primary: #0077b6;
-      --primary-dark: #023e8a;
-      --text: #333;
-      --background: #f8f9fa;
-      --white: #fff;
-      --error: #dc3545;
-      --success: #28a745;
+      --primary: #ff69b4;           /* Hot Pink */
+      --primary-dark: #d14d95;      /* Deep Pink */
+      --primary-light: #ffe6f0;     /* Very light pastel pink */
+      --secondary: #ffcce0;         /* Lighter pink for secondary highlights */
+      --text: #333333;
+      --text-light: #777777;
+      --border: #ffccd5;
+      --background: #fff8fc;
+      --white: #ffffff;
     }
 
     body {
@@ -42,12 +45,21 @@
     }
 
     .btn-primary {
-      background-color: var(--primary);
-      border: none;
+      background-color: var(--primary) !important;
+      border: none !important;
+      color: white;
     }
 
     .btn-primary:hover {
-      background-color: var(--primary-dark);
+      background-color: var(--primary-dark) !important;
+    }
+
+    .btn-primary:focus,
+    .btn-primary:active,
+    .btn-primary:visited {
+      background-color: var(--primary-dark) !important;
+      box-shadow: 0 0 0 0.25rem rgba(255, 105, 180, 0.25) !important;
+      border: none !important;
     }
 
     .btn-link {
@@ -55,8 +67,9 @@
       text-decoration: none;
     }
 
-    .btn-link:hover {
-      text-decoration: underline;
+    .btn-link{
+      color: var(--primary-dark);
+      text-decoration: none;
     }
   </style>
 </head>
@@ -107,6 +120,7 @@
           <a href="{% url 'send-code' %}" class="btn btn-link w-100 text-center">
             <i class="fas fa-redo me-2"></i> Yangi kod so'rash
           </a>
+          <p><a href="{% url 'blog:profile' %}" class="btn btn-link w-100 text-center">Profilega qaytish</a></p>
         </form>
       </div>
     </div>

@@ -1,14 +1,13 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact | Sh's Blog</title>
+    <title>Contact | Sh's🎀N's</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/modern-style.css' %}">
     <style>
@@ -47,10 +46,18 @@
     <!-- Floating Navbar -->
     <nav class="floating-nav">
         <div class="container">
-            <a href="/" class="brand">Sh's Blog</a>
+            <a href="/" class="brand">Sh's🎀N's</a>
             <div class="nav-links">
                 <a href="{% url 'blog:home' %}"><i class="fas fa-home"></i> Home</a>
                 <a href="{% url 'blog:contact' %}" class="active"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="{% url 'blog:about' %}" class="active"><i class="fas fa-envelope"></i> About</a>
+                 {% if request.user.is_authenticated %}
+                    <a href="{% url 'blog:profile' %}">🎀 Profile</a>
+                {% else %}
+                    <a href="{% url 'login' %}">🔐 Login</a>
+                    <a href="{% url 'signup' %}">📝 Sign Up</a>
+                {% endif %}
+
                 <div class="search-box">
                     <form action="{% url 'blog:search' %}" method="get">
                         <input type="text" name="query" placeholder="Search...">
@@ -171,7 +178,7 @@
                 <div class="footer-links">
                     <a href="{% url 'blog:home' %}">Home</a>
                     <a href="{% url 'blog:contact' %}">Contact</a>
-                    <a href="#">About</a>
+                    <a href="{% url 'blog:about' %}">About</a>
                 </div>
                 <div class="social-links">
                     <a href="#"><i class="fab fa-twitter"></i></a>

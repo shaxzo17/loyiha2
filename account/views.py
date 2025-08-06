@@ -8,6 +8,7 @@ from django.contrib.auth import login, logout, authenticate, update_session_auth
 from .forms import SignUpForm, LoginForm , ChangePassForm , ResetPassForm , CustomChangePasswordForm , AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from .utils import send_to_mail , generate_code
+from django.contrib.auth.models import User
 
 def signup_view(request):
     if request.method == "POST":
@@ -39,7 +40,7 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     messages.warning(request, 'Hisobdan chiqdingiz')
-    return redirect('home')
+    return redirect('blog:home')
 
 
 @login_required(login_url='login')
@@ -62,7 +63,7 @@ def profile_update_view(request):
         user.save()
 
         messages.success(request, "Profil ma'lumotlari yangilandi!")
-        return redirect('profile')
+        return redirect('blog:profile')
 
     return render(request, 'account/edit_profile.html', {'user': user})
 
@@ -96,7 +97,7 @@ def change_pass_view(request):
             user.set_password(new_pass)
             user.save()
             messages.success(request, 'Parol muvaffaqiyatli o‘zgartirildi.')
-            return redirect('profile')
+            return redirect('blog:profile')
 
         return render(request, 'account/change_password.html', {'form': form})
 
@@ -184,7 +185,7 @@ def verify_code_view(request):
             del request.session['code_time']
 
             messages.success(request, "Parol muvaffaqiyatli o'zgartirildi!")
-        return redirect('profile')
+        return redirect('blog:profile')
 
     return render(request, 'account/verify_code.html', {'form': CustomChangePasswordForm()})
 

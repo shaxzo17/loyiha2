@@ -10,6 +10,8 @@ from .utils import check_read_articles
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.models import User
+
 def home_page(request):
     categories = Category.objects.all()
     posts = Post.objects.all()
@@ -143,7 +145,7 @@ def update_profile_view(request):
 
         if User.objects.filter(username=username).exclude(pk=user.pk).exists():
             messages.error(request, "Bu username allaqachon band.")
-            return redirect('update-profile')
+            return redirect('blog:update-profile')
 
         user.username = username
         user.email = email
@@ -154,7 +156,7 @@ def update_profile_view(request):
             profile.save()
 
         messages.success(request, "Profil muvaffaqiyatli yangilandi.")
-        return redirect('profile')
+        return redirect('blog:profile')
 
     return render(request, 'account/edit_profile.html', {
         'user': user,
@@ -169,7 +171,7 @@ def change_password_view(request):
             user = form.save()
             update_session_auth_hash(request, user)
             messages.success(request, "Parolingiz muvaffaqiyatli o'zgartirildi!")
-            return redirect('profile')
+            return redirect('blog:profile')
         else:
             for field, errors in form.errors.items():
                 for error in errors:

@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
+  {% load static %}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Biz haqimizda | Conditioners</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <title>Biz haqimizda | Sh's🎀N's</title>
   <style>
     :root {
-      --primary: #0077b6;
-      --primary-light: #cceeff;
-      --primary-dark: #005577;
-      --text: #00334d;
-      --light: #ffffff;
-      --gray: #f5f5f5;
-      --border: #e1e1e1;
+      --primary: #ff69b4;           /* Hot Pink */
+      --primary-dark: #d14d95;      /* Deep Pink */
+      --primary-light: #ffe6f0;     /* Very light pastel pink */
+      --secondary: #ffcce0;         /* Lighter pink for secondary highlights */
+      --text: #333333;
+      --text-light: #777777;
+      --border: #ffccd5;
+      --background: #fff8fc;
+      --white: #ffffff;
     }
+
 
     * {
       margin: 0;
@@ -415,69 +418,68 @@
   <!-- Header matching main page -->
   <header>
     <div class="logo">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24" height="24">
-        <path d="M 272 16 Q 271 1 256 0 Q 241 1 240 16 L 240 89 L 240 89 L 203 53 L 203 53 Q 192 43 181 53 Q 171 64 181 75 L 240 135 L 240 135 L 240 228 L 240 228 L 159 182 L 159 182 L 137 101 L 137 101 Q 132 87 118 89 Q 104 94 106 109 L 120 159 L 120 159 L 56 122 L 56 122 Q 43 116 34 128 Q 28 141 40 150 L 104 187 L 104 187 L 54 200 L 54 200 Q 40 205 42 220 Q 47 233 62 231 L 143 209 L 143 209 L 224 256 L 224 256 L 143 303 L 143 303 L 62 281 L 62 281 Q 47 279 42 292 Q 40 307 54 312 L 104 325 L 104 325 L 40 362 L 40 362 Q 28 371 34 384 Q 43 396 56 390 L 120 353 L 120 353 L 106 403 L 106 403 Q 104 418 118 423 Q 132 425 137 412 L 159 331 L 159 331 L 240 284 L 240 284 L 240 377 L 240 377 L 181 437 L 181 437 Q 171 448 181 459 Q 192 469 203 459 L 240 423 L 240 423 L 240 496 L 240 496 Q 241 511 256 512 Q 271 511 272 496 L 272 423 L 272 423 L 309 459 L 309 459 Q 320 469 331 459 Q 341 448 331 437 L 272 377 L 272 377 L 272 284 L 272 284 L 353 331 L 353 331 L 375 412 L 375 412 Q 380 425 394 423 Q 408 418 406 403 L 392 353 L 392 353 L 456 390 L 456 390 Q 469 396 478 384 Q 484 371 472 362 L 408 325 L 408 325 L 458 312 L 458 312 Q 472 307 470 292 Q 465 279 450 281 L 369 303 L 369 303 L 288 256 L 288 256 L 369 209 L 369 209 L 450 231 L 450 231 Q 465 233 470 220 Q 472 205 458 200 L 408 187 L 408 187 L 472 150 L 472 150 Q 484 141 478 128 Q 469 116 456 122 L 392 159 L 392 159 L 406 109 L 406 109 Q 408 94 394 89 Q 380 87 375 100 L 353 181 L 353 181 L 272 228 L 272 228 L 272 135 L 272 135 L 331 75 L 331 75 Q 341 64 331 53 Q 320 43 309 53 L 272 89 L 272 89 L 272 16 L 272 16 Z"/>
-      </svg>
-      Conditioners
+      Sh's🎀N's
     </div>
     <nav>
-      <a href="{% url 'home' %}">Home</a>
-      <a href="{% url 'about' %}" class="active">About</a>
-      <a href="{% url 'conditioners' %}">Conditioners</a>
-      <a href="{% url 'contact' %}">Contact</a>
-      <a href="{% url 'korzinka' %}" class="korzinka">
-        🛒 ({{ request.session.cart|length|default:0 }})
-      </a>
+      <a href="{% url 'blog:home' %}">Home</a>
+      <a href="{% url 'blog:about' %}" class="active">About</a>
+      <a href="{% url 'blog:contact' %}">Contact</a>
+     {% if request.user.is_authenticated %}
+          <a href="{% url 'blog:profile' %}">🎀 Profile</a>
+      {% else %}
+          <a href="{% url 'login' %}">🔐 Login</a>
+          <a href="{% url 'signup' %}">📝 Sign Up</a>
+      {% endif %}
+
     </nav>
   </header>
 
   <!-- Hero Section -->
   <section class="about-hero">
-    <h1>Conditioners kompaniyasi haqida</h1>
-    <p>10 yillik tajriba | 10,000+ mamnun mijoz | Eng yaxshi sifat</p>
+    <h1>Bizning Python Blog platformamiz haqida</h1>
+    <p>3 yillik tajriba | 5000+ o‘quvchi | 100+ maqola va loyihalar</p>
   </section>
 
-  <!-- About Section -->
   <section class="section">
     <div class="about-content">
       <div class="about-text">
-        <h2>Bizning missiyamiz</h2>
-        <p>2005 yildan beri biz O'zbekiston bozorida eng yaxshi konditsionerlar bilan xizmat qilamiz. Bizning asosiy maqsadimiz - mijozlarimizga yuqori sifatli mahsulotlar va mukammal xizmatni taqdim etish.</p>
-        <p>Biz faqat ishonchli brendlar bilan ishlaymiz va barcha mahsulotlarimiz rasmiy kafolat bilan ta'minlanadi. Har bir mijozimiz uchun individual yondashuv va professional maslahatlar bizning ishimizning asosiy tamoyilidir.</p>
-        <p>Kompaniyamiz doimiy ravishda yangi texnologiyalarni joriy etib, xizmat sifatini oshirishga intiladi.</p>
+        <h2>Bizning maqsadimiz</h2>
+        <p>Python Blog — bu dasturlashni o‘rganishni istagan yoshlar uchun mo‘ljallangan bepul ta’lim platformasi. Biz foydalanuvchilarga maqolalar, videolar, va interaktiv loyihalar orqali bilimlarni taqdim etamiz.</p>
+        <p>Saytimizda Python asoslari, OOP, Django, va sun’iy intellektga oid mavzular yoritiladi. Har bir darsda amaliy misollar, testlar va uy vazifalari mavjud.</p>
+        <p>Biz o‘z jamoamiz bilan yoshlarning texnologiyaga bo‘lgan qiziqishini oshirishga harakat qilamiz!</p>
       </div>
       <div class="about-image">
-        <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Our office">
+      <img src="{% static '1.jpg' %}" alt="Python education">
       </div>
     </div>
   </section>
 
   <!-- Features Section -->
   <section class="section">
-    <h2 class="section-title">Nega bizni tanlashadi?</h2>
+    <h2 class="section-title">Nima uchun biz?</h2>
     <div class="features">
       <div class="feature-card">
         <div class="feature-icon">
-          <i class="fas fa-award"></i>
+          <i class="fas fa-book-open"></i>
         </div>
-        <h3>10 yillik kafolat</h3>
-        <p>Barcha mahsulotlarimiz uchun eng uzoq muddatli kafolatni taqdim etamiz</p>
+        <h3>Interaktiv kurslar</h3>
+        <p>Yangi boshlovchilar uchun sodda va tushunarli darslar</p>
       </div>
 
       <div class="feature-card" style="animation-delay: 0.2s;">
         <div class="feature-icon">
-          <i class="fas fa-tools"></i>
+          <i class="fas fa-laptop-code"></i>
         </div>
-        <h3>Professional montaj</h3>
-        <p>Malakali mutaxassislar tomonidan bepul o'rnatish xizmati</p>
+        <h3>Real loyihalar</h3>
+        <p>Django, Telegram bot, va boshqa amaliy mashg‘ulotlar</p>
       </div>
 
       <div class="feature-card" style="animation-delay: 0.4s;">
         <div class="feature-icon">
-          <i class="fas fa-headset"></i>
+          <i class="fas fa-comments"></i>
         </div>
-        <h3>24/7 qo'llab-quvvatlash</h3>
-        <p>Kunduzi-kechasi sizga yordam berishga tayyormiz</p>
+        <h3>Community yordami</h3>
+        <p>Har doim savol berish va tajriba almashish imkoni mavjud</p>
       </div>
     </div>
   </section>
@@ -486,20 +488,20 @@
   <section class="stats">
     <div class="stats-container">
       <div class="stat-item">
-        <div class="stat-number">10+</div>
+        <div class="stat-number">3+</div>
         <p>Yillik tajriba</p>
       </div>
       <div class="stat-item" style="animation-delay: 0.2s;">
-        <div class="stat-number">10,000+</div>
-        <p>Mamnun mijozlar</p>
+        <div class="stat-number">5000+</div>
+        <p>O‘quvchilar</p>
       </div>
       <div class="stat-item" style="animation-delay: 0.4s;">
-        <div class="stat-number">50+</div>
-        <p>Xodimlar</p>
+        <div class="stat-number">100+</div>
+        <p>Maqolalar</p>
       </div>
       <div class="stat-item" style="animation-delay: 0.6s;">
-        <div class="stat-number">5</div>
-        <p>Filiallar</p>
+        <div class="stat-number">50+</div>
+        <p>Loyihalar</p>
       </div>
     </div>
   </section>
@@ -509,19 +511,19 @@
     <h2 class="section-title">Bizning jamoa</h2>
     <div class="team-members">
       <div class="team-member">
-        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Team member" class="team-photo">
-        <h4>Azizbek Ismoilov</h4>
-        <p>Bosh direktor</p>
+        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Team member" class="team-photo">
+        <h4>Alisher Mamatov</h4>
+        <p>Asoschi & Python ustoz</p>
       </div>
       <div class="team-member" style="animation-delay: 0.2s;">
-        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Team member" class="team-photo">
-        <h4>Dilfuza Rahimova</h4>
-        <p>Mijozlar bilan ishlash bo'limi</p>
+        <img src="https://randomuser.me/api/portraits/women/55.jpg" alt="Team member" class="team-photo">
+        <h4>Feruza Akramova</h4>
+        <p>Kurs muallifi (AI)</p>
       </div>
       <div class="team-member" style="animation-delay: 0.4s;">
-        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Team member" class="team-photo">
-        <h4>Javlon Karimov</h4>
-        <p>Texnik xizmat menejeri</p>
+        <img src="https://randomuser.me/api/portraits/men/64.jpg" alt="Team member" class="team-photo">
+        <h4>Jasur Toirov</h4>
+        <p>Veb dasturchi & mentor</p>
       </div>
     </div>
   </section>
@@ -530,30 +532,33 @@
   <section class="contact">
     <div class="contact-container">
       <div>
-        <h2 class="section-title" style="text-align: left;">Biz bilan bog'laning</h2>
+        <h2 class="section-title" style="text-align: left;">Aloqa uchun</h2>
         <ul class="contact-info">
           <li>
             <i class="fas fa-map-marker-alt"></i>
-            Toshkent shahar, Yunusobod tumani
+            Toshkent shahar , Chilonzor
           </li>
           <li>
             <i class="fas fa-phone"></i>
-            +998 90 123 45 67
+            +998 91 123 45 67
           </li>
           <li>
             <i class="fas fa-envelope"></i>
-            info@conditioners.uz
+            contact@pythonblog.uz
           </li>
           <li>
             <i class="fas fa-clock"></i>
-            Dushanba-Shanba: 9:00 - 18:00
+            Har kuni: 9:00 - 22:00
           </li>
         </ul>
       </div>
       <div class="map-container">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2996.254262065756!2d69.2797253157255!3d41.32971890781235!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8b534175ed31%3A0x52a8f9d9414a2a18!2sTashkent%20City!5e0!3m2!1sen!2s!4v1620000000000!5m2!1sen!2s"
-                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        <iframe
+          src="https://yandex.uz/map-widget/v1/?from=mapframe&ll=69.203705%2C41.285846&mode=search&ol=geo&oid=152887169328&z=16"
+          width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
+        </iframe>
       </div>
+
     </div>
   </section>
 
@@ -565,7 +570,7 @@
       <a href="#"><i class="fab fa-facebook"></i></a>
       <a href="#"><i class="fab fa-youtube"></i></a>
     </div>
-    <p>&copy; 2025 Conditioners. Barcha huquqlar himoyalangan.</p>
+    <p>&copy; 2025 Python Blog. Barcha huquqlar himoyalangan.</p>
   </footer>
 
   <script>
@@ -594,7 +599,6 @@
           el.style.transform = 'translateY(30px)';
         }
 
-        // Apply animation delay if specified
         const delay = el.getAttribute('style')?.match(/animation-delay: (\d+\.?\d*)s/);
         if (delay) {
           el.style.transitionDelay = delay[1] + 's';

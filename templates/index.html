@@ -21,12 +21,13 @@
     <!-- Floating Navbar -->
     <nav class="floating-nav">
         <div class="container">
-            <a href="/" class="brand">Sh's Blog</a>
+            <a href="/" class="brand">Sh's🎀N's</a>
             <div class="nav-links">
                 <a href="{% url 'blog:home' %}" class="active"><i class="fas fa-home"></i> Home</a>
                 <a href="{% url 'blog:contact' %}"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="{% url 'blog:about' %}"><i class="fas fa-envelope"></i> About</a>
                  {% if request.user.is_authenticated %}
-                    <a href="{% url 'blog:profile' %}">🎀 Profil</a>
+                    <a href="{% url 'blog:profile' %}">🎀 Profile</a>
                 {% else %}
                     <a href="{% url 'login' %}">🔐 Login</a>
                     <a href="{% url 'signup' %}">📝 Sign Up</a>

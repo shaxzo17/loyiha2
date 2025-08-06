@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'article'
+    'article',
+    'account'
 ]
 
 MIDDLEWARE = [
@@ -120,6 +121,7 @@ import os
 
 # Static files
 STATIC_URL = '/static/'
+
 
 # Developmentda statik fayllarni shu joydan qidiradi
 STATICFILES_DIRS = [

@@ -5,14 +5,17 @@
   <title>Profil | Conditioners</title>
   <style>
     :root {
-      --primary: #0077b6;
-      --primary-light: #cceeff;
-      --primary-dark: #005577;
-      --text: #00334d;
-      --light: #ffffff;
-      --gray: #f5f5f5;
-      --border: #e1e1e1;
+      --primary: #ff69b4;           /* Hot Pink */
+      --primary-dark: #d14d95;      /* Deep Pink */
+      --primary-light: #ffe6f0;     /* Very light pastel pink */
+      --secondary: #ffcce0;         /* Lighter pink for secondary highlights */
+      --text: #333333;
+      --text-light: #777777;
+      --border: #ffccd5;
+      --background: #fff8fc;
+      --white: #ffffff;
     }
+
 
     * {
       margin: 0;
@@ -272,11 +275,13 @@
 </head>
 <body>
   <header>
-    <div class="logo">Conditioners</div>
+    <div class="logo">Sh's🎀N's</div>
     <nav>
       <a href="{% url 'blog:home' %}" class="active"><i class="fas fa-home"></i> Home</a>
       <a href="{% url 'blog:contact' %}"><i class="fas fa-envelope"></i> Contact</a>
       <a href="{% url 'blog:profile' %}">🎀 Profil</a>
+      <a href="{% url 'blog:about' %}" class="active"><i class="fas fa-envelope"></i> About</a>
+
       <div class="search-box">
         <form action="{% url 'blog:search' %}" method="get">
           <input type="text" name="q" placeholder="Search..." value="{{ query }}">
@@ -291,7 +296,7 @@
     <div class="profile-card">
       <div class="profile-sidebar">
         <div class="profile-avatar">
-          {{ user.username|first|upper }}
+          {{ user.username|first|upper }}🎀
         </div>
         <h2 class="profile-name">
           {% if user.first_name or user.last_name %}
@@ -303,9 +308,9 @@
         <div class="profile-username">@{{ user.username }}</div>
 
         <div class="profile-menu">
-          <a href="{% url 'profile-update' %}"><i class="fas fa-user-edit"></i> Profilni tahrirlash</a>
-          <a href="{% url 'change-pass' %}"><i class="fas fa-key"></i> Parolni o'zgartirish</a>
-          <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Chiqish</a>
+          <a href="{% url 'profile-update' %}"><i class="fas fa-user-edit"></i> Profilni tahrirlash 🎀</a>
+          <a href="{% url 'change-pass' %}"><i class="fas fa-key"></i> Parolni o'zgartirish 🎀</a>
+          <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Chiqish 🎀</a>
         </div>
       </div>
 
@@ -330,7 +335,7 @@
         <div class="info-grid">
           <div class="info-card">
             <div class="info-label">Foydalanuvchi nomi</div>
-            <div class="info-value">{{ user.username }}</div>
+            <div class="info-value">{{ user.username }}🎀</div>
           </div>
 
           <div class="info-card">
