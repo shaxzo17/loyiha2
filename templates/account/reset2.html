@@ -1,0 +1,235 @@
+<!-- reset2.html -->
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <title>Yangi parol | Conditioners</title>
+<style>
+      :root {
+      --primary: #0077b6;
+      --primary-dark: #005f87;
+      --secondary: #e8f7ff;
+      --text: #00334d;
+      --light: #ffffff;
+      --danger: #dc3545;
+      --success: #28a745;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #e1f4ff, #f8fdff);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background-color: var(--light);
+      padding: 18px 40px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--primary);
+      text-align: center;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .auth-container {
+      background-color: var(--light);
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0, 119, 182, 0.1);
+      width: 100%;
+      max-width: 450px;
+      padding: 40px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .auth-title {
+      color: var(--primary);
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 28px;
+    }
+
+    .auth-form .form-group {
+      margin-bottom: 20px;
+    }
+
+    .auth-form label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .auth-form input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #cceeff;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+
+    .auth-form input:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0, 119, 182, 0.2);
+    }
+
+    .auth-form button {
+      width: 100%;
+      padding: 12px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 10px;
+    }
+
+    .auth-form button:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .auth-footer {
+      text-align: center;
+      margin-top: 25px;
+      color: #666;
+    }
+
+    .auth-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .auth-link:hover {
+      text-decoration: underline;
+    }
+
+    .message {
+      padding: 12px 15px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .error {
+      background-color: #ffebee;
+      color: var(--danger);
+      border-left: 4px solid var(--danger);
+    }
+
+    .success {
+      background-color: #e8f5e9;
+      color: var(--success);
+      border-left: 4px solid var(--success);
+    }
+
+    .info {
+      background-color: #e3f2fd;
+      color: var(--primary);
+      border-left: 4px solid var(--primary);
+    }
+
+    .password-toggle {
+      position: relative;
+    }
+
+    .password-toggle input {
+      padding-right: 40px;
+    }
+
+    .toggle-icon {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #666;
+    }
+
+    @media (max-width: 576px) {
+      .auth-container {
+        padding: 30px 20px;
+      }
+
+      header {
+        padding: 15px 20px;
+      }
+    }
+</style>
+</head>
+<body>
+  <header>
+    <div class="logo">Conditioners</div>
+  </header>
+
+  <main>
+    <div class="auth-container">
+      <h1 class="auth-title">Yangi parolni kiriting</h1>
+
+      {% if messages %}
+        {% for message in messages %}
+          <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <form method="post" class="auth-form">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="code">Tasdiqlash kodi</label>
+          <input type="text" id="code" name="code" required>
+        </div>
+
+        <div class="form-group password-toggle">
+          <label for="password">Yangi parol</label>
+          <input type="password" name="password" placeholder="Yangi parol">
+          <input type="password" name="password_confirm">
+          <span class="toggle-icon" onclick="togglePassword('password')">👁️</span>
+        </div>
+
+        <button type="submit">Parolni yangilash</button>
+      </form>
+    </div>
+  </main>
+</body>
+</html>

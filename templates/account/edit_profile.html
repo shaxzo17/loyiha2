@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profilni tahrirlash | Conditioners</title>
+  <style>
+    :root {
+      --primary: #0077b6;
+      --primary-dark: #023e8a;
+      --primary-light: #caf0f8;
+      --secondary: #48cae4;
+      --text: #333333;
+      --text-light: #777777;
+      --border: #dddddd;
+      --background: #f8f9fa;
+      --white: #ffffff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: var(--white);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 15px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--primary);
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--primary);
+    }
+
+    .profile-container {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .profile-card {
+      display: flex;
+      background-color: var(--white);
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .profile-sidebar {
+      width: 300px;
+      padding: 30px;
+      background-color: var(--primary-light);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .profile-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .profile-name {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 5px;
+      text-align: center;
+    }
+
+    .profile-username {
+      color: var(--text-light);
+      margin-bottom: 30px;
+    }
+
+    .profile-menu {
+      width: 100%;
+    }
+
+    .profile-menu a {
+      display: block;
+      padding: 12px 15px;
+      margin-bottom: 10px;
+      color: var(--text);
+      text-decoration: none;
+      border-radius: 5px;
+      transition: all 0.3s;
+    }
+
+    .profile-menu a:hover {
+      background-color: rgba(0, 119, 182, 0.1);
+      color: var(--primary);
+    }
+
+    .profile-menu a i {
+      margin-right: 10px;
+      width: 20px;
+      text-align: center;
+    }
+
+    .profile-content {
+      flex: 1;
+      padding: 30px;
+    }
+
+    .profile-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .profile-title {
+      font-size: 24px;
+      color: var(--primary);
+    }
+
+    .edit-btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 15px;
+      background-color: var(--primary);
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 14px;
+      transition: all 0.3s;
+    }
+
+    .edit-btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .edit-btn i {
+      margin-right: 8px;
+    }
+
+    .update-form {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+
+    .form-group input:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0, 119, 182, 0.1);
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .save-btn {
+      background: var(--primary);
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .save-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0, 119, 182, 0.2);
+    }
+
+    .cancel-btn {
+      background: white;
+      color: var(--primary);
+      padding: 12px 25px;
+      border: 2px solid var(--primary);
+      border-radius: 8px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .cancel-btn:hover {
+      background: var(--primary-light);
+    }
+
+    @media (max-width: 768px) {
+      .profile-card {
+        flex-direction: column;
+      }
+
+      .profile-sidebar {
+        width: 100%;
+      }
+
+      .profile-content {
+        padding: 20px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .form-actions {
+        flex-direction: column;
+      }
+
+      .save-btn, .cancel-btn {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <header>
+    <div class="logo">Conditioners</div>
+    <nav>
+      <a href="{% url 'home' %}">Home</a>
+      <a href="{% url 'conditioners' %}">Conditioners</a>
+      <a href="{% url 'contact' %}">Contact</a>
+      <a href="{% url 'korzinka' %}">🛒 Korzinka</a>
+    </nav>
+  </header>
+
+  <div class="profile-container">
+    <div class="profile-card">
+      <div class="profile-sidebar">
+        <div class="profile-avatar">
+          {% if profile.image %}
+            <img src="{{ profile.image.url }}" alt="{{ user.username }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+          {% else %}
+            {{ user.username|first|upper }}
+          {% endif %}
+        </div>
+        <h2 class="profile-name">
+          {% if user.first_name or user.last_name %}
+            {{ user.first_name }} {{ user.last_name }}
+          {% else %}
+            {{ user.username }}
+          {% endif %}
+        </h2>
+        <div class="profile-username">@{{ user.username }}</div>
+
+        <div class="profile-menu">
+          <a href="{% url 'profile' %}"><i class="fas fa-user"></i> Profilga qaytish</a>
+          <a href="{% url 'change-pass' %}"><i class="fas fa-key"></i> Parolni o'zgartirish</a>
+          <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Chiqish</a>
+        </div>
+      </div>
+
+      <div class="profile-content">
+        <div class="profile-header">
+          <h1 class="profile-title">Profilni tahrirlash</h1>
+          <a href="{% url 'profile' %}" class="edit-btn">
+            <i class="fas fa-arrow-left"></i> Orqaga
+          </a>
+        </div>
+
+        {% if messages %}
+          <div style="margin-bottom: 30px;">
+            {% for message in messages %}
+              <div style="padding: 12px 15px; margin-bottom: 15px;
+                {% if message.tags == 'error' %}
+                  background: #ffebee; color: #c62828; border-left: 4px solid #c62828;
+                {% else %}
+                  background: #e8f5e9; color: #2e7d32; border-left: 4px solid #2e7d32;
+                {% endif %}
+                border-radius: 8px;">
+                {{ message }}
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <form method="post" class="update-form" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="username">Foydalanuvchi nomi</label>
+            <input type="text" id="username" name="username" value="{{ user.username }}" required>
+          </div>
+
+          <div class="form-group">
+            <label for="first_name">Ism</label>
+            <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}">
+          </div>
+
+          <div class="form-group">
+            <label for="last_name">Familiya</label>
+            <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}">
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email manzil</label>
+            <input type="email" id="email" name="email" value="{{ user.email }}" required>
+          </div>
+
+          <div class="form-group">
+            <label for="image">Profil rasmi</label>
+            <input type="file" id="image" name="image" accept="image/*">
+          </div>
+
+          <div class="form-actions">
+            <a href="{% url 'profile' %}" class="cancel-btn">Bekor qilish</a>
+            <button type="submit" class="save-btn">
+              <i class="fas fa-save"></i> Saqlash
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

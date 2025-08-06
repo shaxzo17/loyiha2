@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <title>Profil | Conditioners</title>
+  <style>
+    :root {
+      --primary: #0077b6;
+      --primary-light: #cceeff;
+      --primary-dark: #005577;
+      --text: #00334d;
+      --light: #ffffff;
+      --gray: #f5f5f5;
+      --border: #e1e1e1;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #e1f4ff, #f8fdff);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: var(--light);
+      padding: 18px 40px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    nav a {
+      margin-left: 25px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--primary);
+    }
+
+    .profile-container {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .profile-card {
+      background: var(--light);
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0, 119, 182, 0.1);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      min-height: 500px;
+    }
+
+    .profile-sidebar {
+      background: var(--primary);
+      color: white;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .profile-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 48px;
+      color: var(--primary);
+      font-weight: bold;
+      border: 4px solid white;
+    }
+
+    .profile-name {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+
+    .profile-username {
+      opacity: 0.8;
+      margin-bottom: 30px;
+    }
+
+    .profile-menu {
+      width: 100%;
+      margin-top: auto;
+    }
+
+    .profile-menu a {
+      display: block;
+      color: white;
+      padding: 12px 0;
+      text-decoration: none;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.3s;
+    }
+
+    .profile-menu a:hover {
+      padding-left: 10px;
+    }
+
+    .profile-menu a i {
+      margin-right: 10px;
+    }
+
+    .profile-content {
+      padding: 40px;
+    }
+
+    .profile-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .profile-title {
+      font-size: 28px;
+      color: var(--primary);
+    }
+
+    .edit-btn {
+      background: var(--primary);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .edit-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0, 119, 182, 0.2);
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .info-card {
+      background: var(--gray);
+      padding: 20px;
+      border-radius: 10px;
+      border-left: 4px solid var(--primary);
+    }
+
+    .info-label {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 8px;
+    }
+
+    .info-value {
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    .empty-value {
+      color: #999;
+      font-style: italic;
+    }
+
+    .logout-btn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 10px 20px;
+      background: #ffebee;
+      color: #c62828;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .logout-btn:hover {
+      background: #ffcdd2;
+    }
+      .search-box {
+      margin-left: 30px;
+      position: relative;
+    }
+
+    .search-box input {
+        padding: 8px 15px;
+        border: 1px solid #ddd;
+        border-radius: 30px;
+        outline: none;
+        transition: var(--transition);
+        width: 200px;
+    }
+
+    .search-box input:focus {
+        border-color: var(--primary-color);
+        width: 250px;
+    }
+
+    .search-box button {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: transparent;
+        border: none;
+        color: var(--text-light);
+        cursor: pointer;
+    }
+
+    @media (max-width: 900px) {
+      .profile-card {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-sidebar {
+        padding: 30px;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 576px) {
+      header {
+        padding: 15px 20px;
+        flex-direction: column;
+      }
+
+      nav {
+        margin-top: 15px;
+      }
+
+      nav a {
+        margin: 0 10px;
+      }
+
+      .profile-content {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <header>
+    <div class="logo">Conditioners</div>
+    <nav>
+      <a href="{% url 'blog:home' %}" class="active"><i class="fas fa-home"></i> Home</a>
+      <a href="{% url 'blog:contact' %}"><i class="fas fa-envelope"></i> Contact</a>
+      <a href="{% url 'blog:profile' %}">🎀 Profil</a>
+      <div class="search-box">
+        <form action="{% url 'blog:search' %}" method="get">
+          <input type="text" name="q" placeholder="Search..." value="{{ query }}">
+          <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+      </div>
+      
+    </nav>
+  </header>
+
+  <div class="profile-container">
+    <div class="profile-card">
+      <div class="profile-sidebar">
+        <div class="profile-avatar">
+          {{ user.username|first|upper }}
+        </div>
+        <h2 class="profile-name">
+          {% if user.first_name or user.last_name %}
+            {{ user.first_name }} {{ user.last_name }}
+          {% else %}
+            {{ user.username }}
+          {% endif %}
+        </h2>
+        <div class="profile-username">@{{ user.username }}</div>
+
+        <div class="profile-menu">
+          <a href="{% url 'profile-update' %}"><i class="fas fa-user-edit"></i> Profilni tahrirlash</a>
+          <a href="{% url 'change-pass' %}"><i class="fas fa-key"></i> Parolni o'zgartirish</a>
+          <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Chiqish</a>
+        </div>
+      </div>
+
+      <div class="profile-content">
+        <div class="profile-header">
+          <h1 class="profile-title">Shaxsiy ma'lumotlar</h1>
+          <a href="{% url 'profile-update' %}" class="edit-btn">
+            <i class="fas fa-edit"></i> Tahrirlash
+          </a>
+        </div>
+
+        {% if messages %}
+          <div style="margin-bottom: 30px;">
+            {% for message in messages %}
+              <div style="padding: 12px 15px; margin-bottom: 15px; background: #e8f5e9; color: #2e7d32; border-radius: 8px; border-left: 4px solid #2e7d32;">
+                {{ message }}
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="info-label">Foydalanuvchi nomi</div>
+            <div class="info-value">{{ user.username }}</div>
+          </div>
+
+          <div class="info-card">
+            <div class="info-label">Email manzil</div>
+            <div class="info-value">{{ user.email }}</div>
+          </div>
+
+          <div class="info-card">
+            <div class="info-label">Ism</div>
+            <div class="info-value">
+              {% if user.first_name %}
+                {{ user.first_name }}
+              {% else %}
+                <span class="empty-value">Kiritilmagan</span>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="info-card">
+            <div class="info-label">Familiya</div>
+            <div class="info-value">
+              {% if user.last_name %}
+                {{ user.last_name }}
+              {% else %}
+                <span class="empty-value">Kiritilmagan</span>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="info-card">
+            <div class="info-label">Hisob ochilgan sana</div>
+            <div class="info-value">{{ user.date_joined|date:"d.m.Y" }}</div>
+          </div>
+
+          <div class="info-card">
+            <div class="info-label">Oxirgi kirish</div>
+            <div class="info-value">{{ user.last_login|date:"d.m.Y H:i" }}</div>
+          </div>
+        </div>
+
+        <a href="{% url 'logout' %}" class="logout-btn">
+          <i class="fas fa-sign-out-alt"></i> Hisobdan chiqish
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

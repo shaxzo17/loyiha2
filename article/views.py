@@ -7,121 +7,9 @@ from django.core.paginator import Paginator
 from django.contrib import messages
 from .models import Category, Post, Comment, Rating
 from .utils import check_read_articles
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-
-def user_login(request):
-    if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-
-        user = authenticate(request, username=username, password=password)
-        if user:
-            login(request, user)
-            messages.success(request, "Tizimga muvaffaqiyatli kirdingiz.")
-            return redirect('blog:home')  
-        else:
-            messages.error(request, "Login yoki parol notogri.")
-            return redirect('login')
-
-    return render(request, 'login.html')
-
-def user_logout(request):
-    logout(request)
-    messages.info(request, "Tizimdan chiqdingiz.")
-    return redirect('login')
-
-@login_required
-def blog_home(request):
-    posts = Post.objects.all().order_by('-id')
-    paginator = Paginator(posts, 3)
-    page_number = request.GET.get("page")
-    page_obj = paginator.get_page(page_number)
-
-    return render(request, 'blog/index.html', {'page_obj': page_obj})
-
-def send_verification_code(request):
-    if request.method == 'POST':
-        email = request.POST.get('email')
-        if email:
-            code = random.randint(100000, 999999)
-            request.session['verification_code'] = str(code)
-            request.session['user_email'] = email
-
-            send_mail(
-                subject='Tasdiqlash kodi',
-                message=f"Sizning tasdiqlash kodingiz: {code}",
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[email],
-                fail_silently=False
-            )
-
-            messages.success(request, "Tasdiqlash kodi emailga yuborildi.")
-            return redirect('blog:verify_code') 
-        else:
-            messages.error(request, "Email manzilingizni kiriting.")
-    
-    return render(request, 'send_code.html')
-
-
-def signup(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-
-        if User.objects.filter(username=username).exists():
-            messages.error(request, "Ushbu username band!")
-            return redirect('blog:signup')
-
-        if User.objects.filter(email=email).exists():
-            messages.error(request, "Ushbu email band!")
-            return redirect('blog:signup')
-
-        user = User.objects.create_user(username=username, email=email, password=password)
-        user.is_active = False  
-        user.save()
-
-        code = random.randint(100000, 999999)
-        request.session['verification_code'] = str(code)
-        request.session['temp_user_id'] = user.id  
-
-        send_mail(
-            subject='Ro‘yxatdan o‘tish — tasdiqlash kodi',
-            message=f"Tasdiqlash kodi: {code}",
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[email],
-            fail_silently=False
-        )
-
-        messages.success(request, "Emailga tasdiqlash kodi yuborildi.")
-        return redirect('blog:verify_code')
-
-    return render(request, 'signup.html')
-
-def verify_code(request):
-    if request.method == 'POST':
-        user_code = request.POST.get('code')
-        session_code = request.session.get('verification_code')
-        user_id = request.session.get('temp_user_id')
-
-        if user_code == session_code and user_id:
-            user = User.objects.get(id=user_id)
-            user.is_active = True
-            user.save()
-
-            login(request, user)
-            del request.session['verification_code']
-            del request.session['temp_user_id']
-
-            messages.success(request, "Royxatdan otish muvaffaqiyatli yakunlandi.")
-            return redirect('blog:home')
-        else:
-            messages.error(request, "Kod notogri!")
-
-    return render(request, 'verify_code.html')
-
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 def home_page(request):
     categories = Category.objects.all()
     posts = Post.objects.all()
@@ -237,3 +125,63 @@ def contact(request):
         return redirect('blog:contact')
 
     return render(request, 'contact.html')
+
+
+@login_required(login_url='login')
+def profile_view(request):
+    return render(request, 'account/profile.html', {'user': request.user})
+
+@login_required(login_url='login')
+def update_profile_view(request):
+    user = request.user
+    profile = user.profile
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        image = request.FILES.get('image')
+
+        if User.objects.filter(username=username).exclude(pk=user.pk).exists():
+            messages.error(request, "Bu username allaqachon band.")
+            return redirect('update-profile')
+
+        user.username = username
+        user.email = email
+        user.save()
+
+        if image:
+            profile.image = image
+            profile.save()
+
+        messages.success(request, "Profil muvaffaqiyatli yangilandi.")
+        return redirect('profile')
+
+    return render(request, 'account/edit_profile.html', {
+        'user': user,
+        'profile': profile
+    })
+
+@login_required(login_url='login')
+def change_password_view(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, "Parolingiz muvaffaqiyatli o'zgartirildi!")
+            return redirect('profile')
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    if 'old_password' in field:
+                        messages.error(request, "Hozirgi parolingiz xato kiritildi!")
+                    elif 'new_password2' in field:
+                        messages.error(request, "Yangi parollar mos kelmadi!")
+                    else:
+                        messages.error(request, f"Xato: {error}")
+    else:
+        form = PasswordChangeForm(request.user)
+
+    return render(request, 'account/change_password.html')
+def about(request):
+    return render(request , 'account/about.html')
